@@ -6,7 +6,7 @@ set -e # Stop script if error occurs.
 sudo apt-get update
 sudo apt-get install -y git
 
-# Install go.
+Install go.
 wget https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzvf go1.8.linux-amd64.tar.gz
 mkdir -p $HOME/go/src/github.com $HOME/go/bin $HOME/go/pkg
@@ -15,7 +15,7 @@ echo "export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin" >> $HOME/.bashrc
 echo "export GOPATH=$HOME/go" >> $HOME/.bash_profile
 echo "export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin" >> $HOME/.bash_profile
 
-# Link the learnscalability projects.
+Link the learnscalability projects.
 ln -s /vagrant $HOME/go/src/github.com/learnscalability
 
 # Get hugo in order to build learnscalability.com.
@@ -35,3 +35,16 @@ echo "export PATH=$PATH:$HOME/proto/bin" >> $HOME/.bash_profile
 # Install gRPC and go bindings for protobuf
 go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
 go get -u google.golang.org/grpc
+
+Install docker
+sudo apt-get -y install apt-transport-https ca-certificates curl
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get -y install docker-ce
+sudo usermod -aG docker vagrant
+
+# Install docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > $HOME/docker-compose
+sudo mv $HOME/docker-compose /usr/local/bin/
+sudo chmod +x /usr/local/bin/docker-compose
